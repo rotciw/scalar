@@ -1,6 +1,6 @@
 using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Authentication;
-using Scalar.AspNetCore.Swashbuckle.Extensions;
+using Microsoft.OpenApi.Models;
 
 namespace Scalar.AspNetCore.Playground.Extensions;
 
@@ -22,25 +22,23 @@ internal static class ServiceCollectionExtensions
         });
 
         string[] versions = ["v1", "v2"];
-        services.AddSwaggerGen(options =>
-        {
-            options.AddScalarFilters();
-        });
         foreach (var version in versions)
         {
             services.Configure<ScalarOptions>(options => options.AddDocument(version, $"Version {version}"));
             services.AddOpenApi(version, options =>
             {
-                // Adds api key security scheme to the api
-                // options.AddSecurityScheme(AuthConstants.ApiKeyScheme, scheme =>
-                // {
-                //     scheme.Type = SecuritySchemeType.ApiKey;
-                //     scheme.In = ParameterLocation.Header;
-                //     scheme.Name = "X-Api-Key";
-                // });
-                //
-                // // Adds 401 and 403 responses to operations
-                // options.AddAuthResponse();
+                options.AddDocumentTransformer((document, _, _) =>
+                {
+                    var securityScheme = new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.ApiKey,
+                        In = ParameterLocation.Header,
+                        Name = "X-Api-Key"
+                    };
+                    document.Components ??= new OpenApiComponents();
+                    document.Components.SecuritySchemes.Add(AuthConstants.ApiKeyScheme, securityScheme);
+                    return Task.CompletedTask;
+                });
 
                 options.AddDocumentTransformer((document, context, _) =>
                 {

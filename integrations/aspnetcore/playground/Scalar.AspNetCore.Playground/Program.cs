@@ -32,12 +32,10 @@ var app = builder.Build();
 
 app.MapStaticAssets();
 
-app.MapSwagger("/swagger/{documentName}.json");
 app.MapOpenApi();
 
 Action<ScalarOptions> configureOptions = options =>
     options
-        .WithOpenApiRoutePattern("/swagger/{documentName}.json")
         .WithCdnUrl("https://cdn.jsdelivr.net/npm/@scalar/api-reference")
         .WithFavicon("/favicon.png")
         .WithPreferredScheme(AuthConstants.ApiKeyScheme)

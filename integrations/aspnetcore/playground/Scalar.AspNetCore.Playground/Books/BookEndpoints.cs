@@ -17,12 +17,10 @@ internal static class BookEndpoints
             .WithApiVersionSet(apiVersionSet)
             .MapToApiVersion(1)
             .MapToApiVersion(2)
-            .Stable()
             .RequireAuthorization();
 
         books
-            .MapGet("/", [Stability(Stability.Experimental)] ([FromServices] BookStore bookStore) => bookStore.GetAll())
-            .ExcludeFromApiReference()
+            .MapGet("/", [Stability(Stability.Stable)] ([FromServices] BookStore bookStore) => bookStore.GetAll())
             .Produces<IEnumerable<Book>>();
 
         books

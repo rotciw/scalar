@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using Scalar.AspNetCore.Swashbuckle.Extensions;
 
 namespace Scalar.AspNetCore.Microsoft.Tests;
 

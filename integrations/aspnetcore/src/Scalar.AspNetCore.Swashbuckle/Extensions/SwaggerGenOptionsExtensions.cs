@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Scalar.AspNetCore.Swashbuckle.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Scalar.AspNetCore.Swashbuckle.Extensions;
+namespace Scalar.AspNetCore;
 
 /// <summary>
 /// Provides extension methods for <see cref="SwaggerGenOptions" />.
